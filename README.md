@@ -1,7 +1,34 @@
-# javascript-random-number-guessing
-javascript-random-number-guessing
+# JavaScript Random Number Guessing
 
-<img src="https://github.com/a2rp/javascript-random-number-guessing/blob/main/Screenshot%20(842).png" alt="appImage" />
+A small command-line guessing game built with Node.js. Each round chooses a random number between a lower and upper bound and gives feedback until the correct number is found.
+
+![JavaScript Random Number Guessing](Screenshot%20(842).png)
+
+## Features
+
+- Random number generation for each round
+- Higher and lower hints after every guess
+- Invalid input feedback
+- Replay or quit after each round
+
+## Tech stack
+
+- JavaScript
+- Node.js
+- Node readline
+
+## Run locally
+
+```bash
+npm install
+npm start
+```
+
+## Future prospects
+
+- Track attempts and best scores
+- Add selectable difficulty levels
+- Add a limited-attempt mode
 
 ## Links
 
