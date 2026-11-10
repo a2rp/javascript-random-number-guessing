@@ -1,32 +1,27 @@
 # JavaScript Random Number Guessing
 
-A small command-line guessing game built with Node.js. Each round chooses a random number between a lower and upper bound and gives feedback until the correct number is found.
-
-![JavaScript Random Number Guessing](Screenshot%20(842).png)
+A small command-line number-guessing game built with Node.js. Guess the hidden whole number from 1 to 100, get higher-or-lower hints, and replay as many rounds as you like.
 
 ## Features
 
-- Random number generation for each round
-- Higher and lower hints after every guess
-- Invalid input feedback
-- Replay or quit after each round
+- A new random integer from 1 to 100 each round
+- Higher-or-lower hints and an attempt count
+- Validation for non-integer and out-of-range guesses
+- Yes/no replay prompt with input validation
 
 ## Tech stack
 
 - JavaScript
 - Node.js
-- Node readline
+- Node.js `readline/promises`
 
 ## Run locally
 
-```bash
-npm install
-npm start
-```
+Run `node index.js` or `npm start` from the project directory. The project has no third-party dependencies.
 
 ## Future prospects
 
-- Track attempts and best scores
+- Save a best score between runs
 - Add selectable difficulty levels
 - Add a limited-attempt mode
 

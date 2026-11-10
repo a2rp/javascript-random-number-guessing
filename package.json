@@ -1,7 +1,11 @@
 {
   "name": "javascript-random-number-guessing",
+  "description": "A Node.js command-line number-guessing game with input validation and replay.",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node index.js"
   }

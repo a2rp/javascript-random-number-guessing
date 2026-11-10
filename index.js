@@ -2,43 +2,61 @@ const readline = require("node:readline/promises");
 const { stdin: input, stdout: output } = require("node:process");
 
 const gameInterface = readline.createInterface({ input, output });
-
-// both min and max included
-const getRandomInteger = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const playGame = async () => {
-    while (true) {
-        const lowerNumber = getRandomInteger(0, 49);
-        const upperNumber = getRandomInteger(50, 100);
-        const randomNumber = getRandomInteger(lowerNumber, upperNumber);
+    try {
+        while (true) {
+            const lowerNumber = 1;
+            const upperNumber = 100;
+            const randomNumber = getRandomInteger(lowerNumber, upperNumber);
+            let attempts = 0;
 
-        let guessedNumber;
-        for (;;) {
-            guessedNumber = Number(await gameInterface.question(`Guess a number in range [${lowerNumber},${upperNumber}]: `));
-            if (Number.isNaN(guessedNumber)) {
-                console.log("Please enter a number.");
-            } else if (guessedNumber > randomNumber) {
-                console.log("You guessed a greater number.");
-            } else if (guessedNumber < randomNumber) {
-                console.log("You guessed a smaller number.");
-            } else {
-                console.log("You guessed it right");
-                break;
+            console.log(`\nI'm thinking of a whole number from ${lowerNumber} to ${upperNumber}.`);
+
+            while (true) {
+                const rawGuess = (await gameInterface.question("Your guess: ")).trim();
+                const guessedNumber = Number(rawGuess);
+
+                if (!/^\d+$/.test(rawGuess) || !Number.isInteger(guessedNumber)) {
+                    console.log("Enter a whole number using digits 0-9.");
+                    continue;
+                }
+
+                if (guessedNumber < lowerNumber || guessedNumber > upperNumber) {
+                    console.log(`Choose a number from ${lowerNumber} to ${upperNumber}.`);
+                    continue;
+                }
+
+                attempts += 1;
+                if (guessedNumber > randomNumber) {
+                    console.log("Too high.");
+                } else if (guessedNumber < randomNumber) {
+                    console.log("Too low.");
+                } else {
+                    console.log(`Correct! You found it in ${attempts} ${attempts === 1 ? "guess" : "guesses"}.`);
+                    break;
+                }
             }
-        }
 
-        console.log("\n");
-        const quit = await gameInterface.question("Do you want to quit? ['yes' to quit] ");
-        if (quit.trim().toLowerCase() === "yes") {
-            break;
+            let replay;
+            do {
+                replay = (await gameInterface.question("Play another round? (yes/no): "))
+                    .trim()
+                    .toLowerCase();
+                if (replay !== "yes" && replay !== "no") {
+                    console.log("Please answer yes or no.");
+                }
+            } while (replay !== "yes" && replay !== "no");
+
+            if (replay === "no") break;
         }
-        console.log("\n");
+    } finally {
+        gameInterface.close();
     }
-
-    gameInterface.close();
 };
 
-playGame();
-
+playGame().catch((error) => {
+    console.error("The game could not finish:", error.message);
+    process.exitCode = 1;
+});
